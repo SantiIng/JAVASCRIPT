@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Configuración de la página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAVASCRIPT</title>
+
+    <!-- Estilos CSS para el diseño de la página -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #promedio-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        /* Reglas de estilo para las etiquetas de etiquetas (label) */
+        label {
+            display: block;
+            /* Hace que la etiqueta sea de tipo bloque */
+            margin-bottom: 10px;
+            /* Añade un margen inferior de 10 píxeles */
+        }
+
+        /* Reglas de estilo para los elementos de entrada (input) */
+        input {
+            width: 100%;
+            /* Ocupa el 100% del ancho disponible */
+            padding: 8px;
+            /* Añade un relleno interno de 8 píxeles */
+            margin-bottom: 15px;
+            /* Añade un margen inferior de 15 píxeles */
+            box-sizing: border-box;
+            /* Establece el modelo de caja como "border-box" */
+        }
+
+        /* Reglas de estilo para los botones */
+        button {
+            background-color: #4caf50;
+            /* Establece el color de fondo del botón */
+            color: #fff;
+            /* Establece el color del texto del botón */
+            padding: 10px 20px;
+            /* Añade relleno interno al botón */
+            border: none;
+            /* Elimina cualquier borde del botón */
+            border-radius: 4px;
+            /* Aplica un borde redondeado con radio de 4 píxeles */
+            cursor: pointer;
+            /* Cambia el cursor a una mano al pasar sobre el botón */
+            margin-right: 10px;
+            /* Añade un margen derecho de 10 píxeles */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Contenedor principal de la aplicación -->
+    <div id="promedio-container">
+        <!-- Título de la aplicación -->
+        <h2>CALCULAR PROMEDIO</h2>
+
+        <!-- Contenedor de las materias -->
+        <div id="materias-container">
+            <!-- Materias iniciales -->
+            <label for="materia1">Materia 1:</label>
+            <input type="number" class="materia" placeholder="Ingrese la calificación 1">
+
+            <label for="materia2">Materia 2:</label>
+            <input type="number" class="materia" placeholder="Ingrese la calificación 2">
+
+            <label for="materia3">Materia 3:</label>
+            <input type="number" class="materia" placeholder="Ingrese la calificación 3">
+        </div>
+
+        <!-- Botones de acción -->
+        <button onclick="agregarMateria()">Agregar materia</button>
+        <button onclick="calcularPromedio()">Calcular promedio</button>
+
+        <!-- Resultado del cálculo del promedio -->
+        <p id="resultado"></p>
+    </div>
+
+    <!-- Scripts de JavaScript para la lógica de la aplicación -->
+    <script>
+        // Función para agregar una nueva materia dinámicamente
+        function agregarMateria() {
+            // Obtener el contenedor de materias por su ID
+            var materiasContainer = document.getElementById('materias-container');
+
+            // Crear un nuevo elemento <div> para representar una nueva materia
+            var nuevaMateria = document.createElement('div');
+
+            // Obtener el número de materias existentes y calcular el número de la nueva materia
+            var numeroMateria = materiasContainer.querySelectorAll('.materia').length + 1;
+
+            // Configurar el contenido HTML del nuevo elemento <div>
+            nuevaMateria.innerHTML = `
+                <!-- Crear una etiqueta <label> con un atributo "for" dinámico -->
+                <label for="materia${numeroMateria}">Materia ${numeroMateria}:</label>
+    
+                <!-- Crear un campo de entrada <input> de tipo número con clase "materia" -->
+                <input type="number" class="materia" placeholder="Ingrese la calificación ${numeroMateria}">
+            `;
+
+            // Agregar el nuevo elemento <div> al contenedor de materias
+            materiasContainer.appendChild(nuevaMateria);
+        }
+
+        // Función para calcular el promedio de las materias ingresadas
+        function calcularPromedio() {
+            // Obtener todas las materias por su clase
+            var materias = document.getElementsByClassName('materia');
+            var notas = [];
+
+            // Recorriendo las materias para obtener las calificaciones
+            for (var i = 0; i < materias.length; i++) {
+                // Obtener el valor numérico de la calificación
+                var nota = parseFloat(materias[i].value);
+
+                // Validar si la calificación es un número
+                if (isNaN(nota)) {
+                    // Mostrar una alerta y detener el proceso si la calificación no es válida
+                    alert('Por favor, ingrese notas válidas.');
+                    return;
+                }
+
+                // Agregar la calificación al array de notas
+                notas.push(nota);
+            }
+
+            // Calculando el promedio de las calificaciones
+            var promedio = notas.reduce((a, b) => a + b, 0) / notas.length;
+
+            // Mostrando el resultado en la página
+            document.getElementById('resultado').innerHTML = 'El promedio es: ' + promedio.toFixed(2);
+        }
+    </script>
+</body>
+
+</html>
